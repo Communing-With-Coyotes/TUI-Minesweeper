@@ -1,44 +1,58 @@
+from typing import Optional
+from dataclasses import dataclass
+
 from term_colors import *
 
 
-# TILE CHARACTERS
+# TILE SYMBOLS
 UNSEARCHED_SPOT = "■"
 SEARCHED_SPOT = "⛶"
 FLAGGED_SPOT = "⟎"
 MINED_SPOT = "⧆"
 
-# COLORS
-BLACK = Color(0, 0, 0)
-GRAY = Color(128, 128, 128)
-EMERALD = Color(99, 212, 113)
-BROWN = Color(197, 123, 87)
-RED = Color(255, 0, 0)
+
+@dataclass(frozen=True)
+class Tile:
+    symbol: str
+    color: Color
+    selected_color: Color
 
 
-UNSEARCHED_TILE = {
-    "symbol": UNSEARCHED_SPOT, 
-    "color": GRAY.fg(),
-    "selected_color": EMERALD.fg()
-}
+UNSEARCHED_TILE = Tile(
+    symbol = UNSEARCHED_SPOT,
+    color = GRAY,
+    selected_color = EMERALD
+)
 
 
-SEARCHED_TILE = {
-    "symbol": SEARCHED_SPOT, 
-    "color": BROWN.fg(),
-    "selected_color": EMERALD.fg()
-}
+SEARCHED_TILE = Tile(
+    symbol = SEARCHED_SPOT,
+    color = BROWN,
+    selected_color = EMERALD
+)
 
 
-EXPLODED_MINE = {
-    "symbol": MINED_SPOT,
-    "color": RED.fg(),
-    "selected_color": RED.fg()
-}
+EXPLODED_MINE = Tile(
+    symbol = MINED_SPOT,
+    color = RED,
+    selected_color = RED
+)
 
 
-def get_tile(tile_definition, selected = None, symbol = None):
-    symbol = symbol if symbol else tile_definition["symbol"]
-    draw_color = tile_definition["selected_color"] if selected else tile_definition["color"]
+def get_tile(
+    tile: Tile,
+    selected: bool = False,
+    symbol: Optional[str] = None
+    ) -> str:
+    """
+    Returns the colored string required to draw a tile to the terminal.
+    :param tile: The Tile instance.
+    :param selected: Whether the tile is currently selected.
+    :param symbol: Optional symbol to override the default tile symbol.
+    :return: A colored string for drawing the tile to the terminal.
+    """
+    draw_symbol = symbol if symbol else tile.symbol
+    draw_color = tile.selected_color.fg() if selected else tile.color.fg()
 
-    return f"{draw_color}{symbol}{RESET_COLOR}"
+    return f"{draw_color}{draw_symbol}{RESET_COLOR}"
 
