@@ -1,0 +1,15 @@
+# Python generated files
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+
+# IDE and editor files
+.vscode/
+
+# Environment variables
+.env
+
+# Project-specific artifacts
+tui_minesweeper.egg-info/
