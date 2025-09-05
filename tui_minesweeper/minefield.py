@@ -1,4 +1,5 @@
 from typing import List, Set, Tuple, Optional, NamedTuple
+from .position import Position
 import random
 
 
@@ -14,11 +15,6 @@ class Offset(NamedTuple):
     delta_col: int
 
 
-class Position(NamedTuple):
-    """Immutable coordinate for a cell in the minefield."""
-
-    row: int
-    col: int
 
 
 class RevealResult(NamedTuple):
