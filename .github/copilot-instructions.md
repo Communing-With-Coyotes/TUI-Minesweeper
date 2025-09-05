@@ -2,6 +2,7 @@
 
 Guidance for AI agents contributing to the terminal Minesweeper project.
 
+
 ## Quick Start
 
 - Create and activate a venv, install dependencies:
@@ -20,6 +21,10 @@ Guidance for AI agents contributing to the terminal Minesweeper project.
   ```bash
   pytest -q
   ```
+
+## Dependency Analysis
+
+- When deciding how to accomplish a task, always analyze `requirements.txt` for frameworks and libraries in use. This ensures compatibility and leverages existing dependencies.
 
 ## Code Style
 
