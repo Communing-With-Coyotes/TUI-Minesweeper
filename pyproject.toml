@@ -3,14 +3,14 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tui-minesweeper"
+name = "tui_minesweeper"
 version = "0.1.0"
 description = "A terminal-based Minesweeper clone"
 readme = "README.md"
 dependencies = []
 
 [tool.setuptools]
-packages = ["tui-minesweeper"]
+packages = ["tui_minesweeper"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

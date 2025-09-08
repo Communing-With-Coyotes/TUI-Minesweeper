@@ -26,7 +26,10 @@ Guidance for AI agents contributing to the terminal Minesweeper project.
 
 - When deciding how to accomplish a task, always analyze `requirements.txt` for frameworks and libraries in use. This ensures compatibility and leverages existing dependencies.
 
+
 ## Code Style
+
+**When generating code, always follow these code style rules.**
 
 - Follow PEP 8. Use `black` for formatting, `flake8` for linting.
 - Use type hints for public APIs and local variables.
