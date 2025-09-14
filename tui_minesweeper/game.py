@@ -3,7 +3,7 @@
 from blessed import Terminal
 import sys
 from tui_minesweeper.minefield import Minefield
-from tui_minesweeper.ui import minefield_ui
+from tui_minesweeper.ui import render_minefield
 from tui_minesweeper.ui.compositor import Compositor
 
 
@@ -53,7 +53,7 @@ class Game:
                 sys.exit(0)
 
             if should_update:
-                minefield_ui.draw_minefield(self.minefield, self.compositor)
+                self.compositor.add_draw_call(render_minefield.render_minefield(self.minefield, self.compositor))
                 self.compositor.draw()
                 last_update = now
 
