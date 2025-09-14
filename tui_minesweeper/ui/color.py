@@ -28,6 +28,7 @@ class Color(NamedTuple):
         return term.on_color_rgb(self.r, self.g, self.b)
 
 
+
 class ColorPair(NamedTuple):
     """
     Pair of foreground and background colors.
@@ -54,3 +55,15 @@ class ColorPair(NamedTuple):
         result += term.normal
         
         return result
+
+
+
+# Default color constants (expand as needed)
+BLACK = Color(0, 0, 0)
+WHITE = Color(255, 255, 255)
+RED = Color(255, 0, 0)
+GREEN = Color(0, 255, 0)
+BLUE = Color(0, 0, 255)
+YELLOW = Color(255, 255, 0)
+CYAN = Color(0, 255, 255)
+MAGENTA = Color(255, 0, 255)
