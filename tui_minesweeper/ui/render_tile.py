@@ -1,9 +1,22 @@
-from typing import NamedTuple
+
+from typing import NamedTuple, Optional
+
+from blessed import Terminal
+from tui_minesweeper.ui.color import ColorPair
+
 
 class RenderTile(NamedTuple):
     symbol: str
-    fg_color: str
-    bg_color: str
+    color: ColorPair
 
-# Example usage:
-# tile = RenderTile(symbol='*', fg_color='white', bg_color='black')
+    def to_blessed(self, term: Terminal) -> str:
+        """
+        Render the symbol with blessed color formatting.
+
+        Args:
+            term (blessed.Terminal): Terminal instance.
+
+        Returns:
+            str: Symbol wrapped with blessed color formatting.
+        """
+        return self.color.to_blessed(term, self.symbol)
