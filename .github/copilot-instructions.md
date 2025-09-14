@@ -27,7 +27,7 @@ Guidance for AI agents contributing to the terminal Minesweeper project.
 - When deciding how to accomplish a task, always analyze `requirements.txt` for frameworks and libraries in use. This ensures compatibility and leverages existing dependencies.
 
 
-## Code Style
+## Code Style Guidelines
 
 **When generating code, always follow these code style rules.**
 
