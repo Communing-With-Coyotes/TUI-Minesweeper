@@ -1,100 +1,24 @@
 from blessed import Terminal
 from typing import NamedTuple
 from tui_minesweeper.position import Position
-
-
-
-class DrawCall(NamedTuple):
-    """
-    Represents a single draw call with position and z order.
-    """
-
-    position: Position
-    z_layer: int
-    content: list[str]
-    width: int | None = None
-    height: int | None = None
-
-    def clip_content(
-        self,
-        width: int | None = None,
-        height: int | None = None,
-    ) -> list[str]:
-        """
-        Clip the content to fit within the given width and height, without wrapping.
-
-        Args:
-            width (int | None): The maximum width for each line. If not set, falls back to the DrawCall instance's width. If both are None, lines are not clipped horizontally.
-            height (int | None): The maximum number of lines. If not set, falls back to the DrawCall instance's height. If both are None, lines are not clipped vertically.
-
-        Returns:
-            list[str]: Lines of text, clipped to fit the given size.
-        """
-        final_width: int | None = width if width is not None else self.width
-        final_height: int | None = height if height is not None else self.height
-
-        clipped_lines: list[str] = []
-
-        for line in self.content:
-            if final_width is not None:
-                clipped_lines.append(line[:final_width])
-            else:
-                clipped_lines.append(line)
-
-        if final_height is not None and len(clipped_lines) > final_height:
-            return clipped_lines[:final_height]
-
-        return clipped_lines
-
-
-    def wrap_content(
-        self,
-        width: int | None = None,
-        height: int | None = None,
-    ) -> list[str]:
-        """
-        Wrap the content to fit within the given width and height.
-
-        Args:
-            width (int | None): The maximum width for wrapping lines. If not set, falls back to the DrawCall instance's width. If both are None, lines are not wrapped.
-            height (int | None): The maximum number of lines. If not set, falls back to the DrawCall instance's height. If both are None, lines are not clipped vertically.
-
-        Returns:
-            list[str]: Lines of text, wrapped and clipped to fit the given size. Tab characters are preserved.
-        """
-        import textwrap
-
-        final_width: int | None = width if width is not None else self.width
-        final_height: int | None = height if height is not None else self.height
-
-        wrapped_lines: list[str] = []
-
-        for line in self.content:
-            if final_width is not None:
-                # Wrap strictly every final_width characters
-                if line:
-                    wrapped = [line[i:i+final_width] for i in range(0, len(line), final_width)]
-                else:
-                    # Preserve empty lines in wrapped output
-                    wrapped = [""]
-                wrapped_lines.extend(wrapped)
-            else:
-                wrapped_lines.append(line)
-
-        if final_height is not None and len(wrapped_lines) > final_height:
-            return wrapped_lines[:final_height]
-
-        return wrapped_lines
-
+from tui_minesweeper.ui.draw_call import DrawCall
 
 
 class Compositor:
     """
     Compositor for batching and blitting text to the terminal in a single draw call.
     """
-
-    def __init__(self) -> None:
+    def __init__(self, terminal: Terminal | None = None) -> None:
         self._draw_calls: list[DrawCall] = []
+        self._terminal: Terminal = terminal if terminal is not None else Terminal()
+
+
+    @property
+    def terminal(self) -> Terminal:
+        """
+        Read-only access to the Terminal instance used by the compositor.
+        """
+        return self._terminal
 
 
     def add_text(
@@ -118,7 +42,7 @@ class Compositor:
         else:
             lines: list[str] = content
 
-        draw_call = DrawCall(
+        draw_call: DrawCall = DrawCall(
             position=Position(row, col),
             z_layer=z_layer,
             content=lines,
@@ -145,11 +69,11 @@ class Compositor:
             key=lambda item: (item[1].z_layer, item[0]),
         )
 
-        term = Terminal()
-        term_width: int = term.width or 80
-        term_height: int = term.height or 24
+        term_width: int = self.terminal.width or 80
+        term_height: int = self.terminal.height or 24
 
-        print(term.home + term.clear, end="")
+        print(self.terminal.home + self.terminal.clear, end="")
+
         for _, draw_call in sorted_calls:
             content_lines: list[str] = draw_call.clip_content(
                 width=term_width,
