@@ -51,9 +51,12 @@ def test_drawcall_wrap_content_width_and_height():
 
 
 def test_compositor_add_text_and_draw(monkeypatch, capsys):
+    # Patch Compositor.terminal property to return DummyTerminal
+    monkeypatch.setattr(
+        "tui_minesweeper.ui.compositor.Compositor.terminal",
+        property(lambda self: DummyTerminal)
+    )
     comp = Compositor()
-    # Patch Terminal to DummyTerminal
-    monkeypatch.setattr("tui_minesweeper.ui.compositor.Terminal", lambda: DummyTerminal())
     comp.add_text("hello", col=2, row=1, z_layer=0)
     comp.add_text(["world", "!"], col=0, row=0, z_layer=1)
     comp.draw()
