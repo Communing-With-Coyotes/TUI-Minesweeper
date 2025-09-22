@@ -27,15 +27,15 @@ def render_ui_list(ui_list: UIList, compositor: Compositor, position: Position =
 
         symbol: str = ""
         if is_selected and item.selected_symbol is not None:
-            symbol = f"{item.selected_symbol.to_blessed(compositor.terminal)} "
+            symbol = f"{item.selected_symbol.render(compositor.terminal)} "
         elif item.symbol is not None:
-            symbol = f"{item.symbol.to_blessed(compositor.terminal)} "
+            symbol = f"{item.symbol.render(compositor.terminal)} "
 
         if is_selected:
             color_pair = item.selected_color if item.selected_color is not None else ui_list.selected_color
         else:
             color_pair = item.color if item.color is not None else ui_list.color
-        content: str = color_pair.to_blessed(compositor.terminal, item.text)
+        content: str = color_pair.wrap(compositor.terminal, item.text)
 
         rendered_item: str = f"{symbol}{content}"
         rendered_items.append(rendered_item)

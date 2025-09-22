@@ -46,7 +46,7 @@ def render_minefield(minefield: Minefield, compositor: Compositor, position: Pos
             else:
                 tile = UNSEARCHED_TILE
 
-            line += tile.to_blessed(compositor.terminal)
+            line += tile.render(compositor.terminal)
         lines.append(line.rstrip())  # Remove trailing space for neatness
 
     return DrawCall(

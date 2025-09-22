@@ -9,7 +9,7 @@ class RenderTile(NamedTuple):
     symbol: str
     color: ColorPair
 
-    def to_blessed(self, term: Terminal) -> str:
+    def render(self, term: Terminal) -> str:
         """
         Render the symbol with blessed color formatting.
 
@@ -19,4 +19,4 @@ class RenderTile(NamedTuple):
         Returns:
             str: Symbol wrapped with blessed color formatting.
         """
-        return self.color.to_blessed(term, self.symbol)
+        return self.color.wrap(term, self.symbol)
