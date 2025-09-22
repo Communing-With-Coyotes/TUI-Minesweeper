@@ -25,33 +25,33 @@ Guidance for AI agents contributing to the terminal Minesweeper project.
 
 ## Dependency Analysis
 
-- When deciding how to accomplish a task, always analyze `requirements.txt` for frameworks and libraries in use. This ensures compatibility and leverages existing dependencies.
+- When deciding how to accomplish a task, always analyze `requirements.txt` for frameworks and libraries in use to ensure compatibility.
 
 
 ## Code Style Guidelines
 
-**When generating code, always follow these code style rules.**
+When generating code, follow these rules:
 
-- Follow PEP 8. Use `black` for formatting, `flake8` for linting.
-- Use type hints for public APIs and local variables.
-- Separate logical sections with blank lines.
-- Always leave two blank lines between the end of one method and the declaration of the next.
-- Use descriptive, snake_case variable names; avoid single-letter names except for simple counters.
- - For complicated logical sections, add a concise descriptive comment explaining intent and behavior.
- - When altering code, always reevaluate and update nearby comments so they remain accurate.
+- **PEP 8:** Use `black` and `flake8`.
+- **Type hints:** For public APIs and local variables.
+- **Spacing:** Separate logical sections with blank lines; leave two blank lines between methods.
+- **Names:** Use descriptive `snake_case` names; avoid single-letter names except simple counters.
+- **Comments:** For complex logic, add concise intent/behavior comments and update them when altering code.
+- **Method naming:** Prefer names that describe what the method does (its intent/use) rather than how. Avoid exposing implementation details in public method names. Exceptions: private or internal APIs may include implementation-specific terms when the name reflects intended usage tied to that implementation.
 
 
 ## Code Guidance
 
-- Prefer immutable data structures (tuples, frozensets) when data shouldn't change.
-- Use tuples internally; for public APIs, prefer dataclasses, NamedTuple, TypedDict, or small custom classes.
+- Prefer immutable structures (tuples, frozensets) when data shouldn't change.
+- Use tuples internally; for public APIs prefer `dataclasses`, `NamedTuple`, or `TypedDict`.
 - Keep functions small and focused; split large functions into helpers.
-- Write unit tests for all features and bug fixes, covering typical and edge cases.
-- Use descriptive commit messages; follow the conventional commit format where applicable.
+- Write unit tests for features and bug fixes, covering typical and edge cases.
+- Use descriptive commit messages; follow conventional commit format when applicable.
 
 ## Testing Guidance
 
-- Purpose: Tests must validate that functions produce the intended outputs given their design and usage.
-- Approach: Identify a function's intent, then assert correct behavior for typical inputs and edge cases.
-- Failures: When relevant, include tests that confirm known-bad inputs fail in the expected way (specific exceptions or error states).
-- Scope: Prefer focused unit tests that check outputs, side-effects, and error conditions rather than implementation details.
+- **Purpose:** Tests must validate that functions produce intended outputs based on their design and usage.
+- **Approach:** Identify a function's intent, then assert correct behavior for typical inputs and edge cases.
+- **Failures:** Include tests that confirm known-bad inputs fail as expected (specific exceptions or error states).
+- **Scope:** Prefer focused unit tests checking outputs, side-effects, and error conditions rather than implementation details.
+
