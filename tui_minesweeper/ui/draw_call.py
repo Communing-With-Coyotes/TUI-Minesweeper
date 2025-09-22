@@ -1,7 +1,7 @@
 from __future__ import annotations
 from typing import NamedTuple
 
-from tui_minesweeper.position import Position
+from tui_minesweeper.rect import Position
 from blessed import Terminal
 import os
 

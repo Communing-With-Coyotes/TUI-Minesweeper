@@ -1,6 +1,6 @@
 from blessed import Terminal
 from typing import NamedTuple
-from tui_minesweeper.position import Position
+from tui_minesweeper.rect import Position
 from tui_minesweeper.ui.draw_call import DrawCall
 
 

@@ -3,7 +3,7 @@ Unit tests for DrawCall and Compositor classes in tui_minesweeper.ui.compositor.
 """
 import pytest
 from tui_minesweeper.ui.compositor import DrawCall, Compositor
-from tui_minesweeper.position import Position
+from tui_minesweeper.rect import Position
 
 class DummyTerminal:
     width = 10

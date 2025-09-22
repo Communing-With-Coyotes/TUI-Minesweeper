@@ -3,6 +3,7 @@
 from blessed import Terminal
 import sys
 from tui_minesweeper.minefield import Minefield
+from tui_minesweeper.position import Position
 from tui_minesweeper.ui import render_minefield
 from tui_minesweeper.ui.compositor import Compositor
 
