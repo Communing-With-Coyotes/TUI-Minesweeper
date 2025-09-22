@@ -54,4 +54,12 @@ When generating code, follow these rules:
 - **Approach:** Identify a function's intent, then assert correct behavior for typical inputs and edge cases.
 - **Failures:** Include tests that confirm known-bad inputs fail as expected (specific exceptions or error states).
 - **Scope:** Prefer focused unit tests checking outputs, side-effects, and error conditions rather than implementation details.
+- **Ensure terminal styling in tests:** For tests that assert colors or styling, set `TERM` to a 256-color value and create a blessed `Terminal` with `force_styling=True` so color/styling sequences are emitted.
+  - **Snippet (place at top of test modules):**
+    ```python
+    import os
+    from blessed import Terminal
 
+    os.environ.setdefault("TERM", "xterm-256color")
+    term = Terminal(force_styling=True)
+    ```

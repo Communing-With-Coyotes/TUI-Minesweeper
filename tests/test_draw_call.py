@@ -1,5 +1,9 @@
 import pytest
+import os
 from blessed import Terminal
+
+# Ensure tests run with a 256-color TERM so blessed emits color sequences.
+os.environ.setdefault("TERM", "xterm-256color")
 import regex
 from tui_minesweeper.position import Position
 from tui_minesweeper.ui.draw_call import DrawCall
@@ -97,8 +101,6 @@ def test_clip_and_wrap_preserves_ansi():
     """
     Ensure that clipping and wrapping preserve ANSI escape codes and visible text.
     """
-    import os
-    os.environ.setdefault("TERM", "xterm-256color")
 
     term = Terminal(force_styling=True)
     red_text = term.red("abcdef")

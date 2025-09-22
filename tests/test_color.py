@@ -1,8 +1,12 @@
 import pytest
+import os
 from blessed import Terminal
 from tui_minesweeper.ui.color import Color, ColorPair
 
-term = Terminal()
+# Ensure tests run with a 256-color TERM so blessed emits color sequences.
+os.environ.setdefault("TERM", "xterm-256color")
+
+term = Terminal(force_styling=True)
 
 def test_color_to_blessed_fg():
     color = Color(10, 20, 30)
@@ -43,6 +47,8 @@ def test_colorpair_to_blessed_fg_and_bg():
     assert content in result
     # Both fg and bg should be reset: FG (39) then BG (49)
     assert result.endswith("\x1b[39m\x1b[49m")
+    # Background sequence should appear before the foreground sequence
+    assert result.index(term.on_color_rgb(10, 11, 12)) < result.index(term.color_rgb(7, 8, 9))
 
 def test_colorpair_to_blessed_none():
     pair = ColorPair()
@@ -64,3 +70,19 @@ def test_color_channels_clamped_low_and_high():
     # Background clamps
     assert low.sequence(term, fg=False) == term.on_color_rgb(0, 0, 0)
     assert high.sequence(term, fg=False) == term.on_color_rgb(255, 255, 255)
+
+
+def test_color_wrap_fg_and_bg_reset():
+    # Ensure Color.wrap uses the correct reset depending on fg flag
+    fg = Color(12, 34, 56)
+    bg = Color(98, 76, 54)
+
+    fg_wrapped = fg.wrap(term, "A", fg=True)
+    assert fg_wrapped.startswith(term.color_rgb(12, 34, 56))
+    assert fg_wrapped.endswith("\x1b[39m")
+    assert "A" in fg_wrapped
+
+    bg_wrapped = bg.wrap(term, "B", fg=False)
+    assert bg_wrapped.startswith(term.on_color_rgb(98, 76, 54))
+    assert bg_wrapped.endswith("\x1b[49m")
+    assert "B" in bg_wrapped
