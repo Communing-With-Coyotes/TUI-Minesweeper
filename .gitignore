@@ -15,4 +15,4 @@ __pycache__/
 tui_minesweeper.egg-info/
 
 # Scratch Files
-scratch/*
+scratch/
