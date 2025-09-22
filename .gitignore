@@ -13,3 +13,6 @@ __pycache__/
 
 # Project-specific artifacts
 tui_minesweeper.egg-info/
+
+# Scratch Files
+scratch/*
